@@ -53,7 +53,7 @@ const AddComment = function(props) {
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Inserisci una recensione:</Form.Label>
                 <Form.Control as="textarea" rows={3} required value={recensione.comment} onChange={(e) => {
-                    useState({
+                    setRecensione({
                         ...recensione,
                         comment: e.target.value
                     })
@@ -64,16 +64,16 @@ const AddComment = function(props) {
                 <Form.Group className="mb-3">
                                 <Form.Label>Vota:</Form.Label>
                                 <Form.Select required value={recensione.rate} onChange={(e) => {
-                    useState({
+                    setRecensione({
                         ...recensione,
-                            rate: e.target.value
+                        rate: e.target.value
                     })
                 }} >
                                 <option value="1">1</option>
                                 <option value="2">2</option>
-                                <option value="2">3</option>
-                                <option value="2">4</option>
-                                <option value="2">5</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                                 </Form.Select>
                 </Form.Group>
 
@@ -88,5 +88,3 @@ const AddComment = function(props) {
 
 export default AddComment
 
-
-// add comment che permette di aggiungere un comment, contiene un form che fa una richiesta post

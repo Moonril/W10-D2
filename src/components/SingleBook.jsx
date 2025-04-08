@@ -36,7 +36,7 @@ const SingleBook = function (props) {
                         <Card style={styles.card}>
                             <Card.Img variant="top" src={props.book.img} className="w-100" style={{
                                 ...styles.cardImage,
-                                border: props.asinCorrente ? '3px solid red' : 'none'
+                                border: props.asinCorrente === props.book.asin ? '3px solid red' : 'none'
                             }} onClick={() => {
                                 // al click qua, io devo salvare l'asin in booklist
                                 props.cambiaValore(props.book.asin)
