@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import CommentList from "./CommentList";
 import AddComment from "./AddComment";
 import { Spinner, ListGroup, Alert } from "react-bootstrap";
@@ -6,21 +6,21 @@ import { Spinner, ListGroup, Alert } from "react-bootstrap";
 const URL = 'https://striveschool-api.herokuapp.com/api/comments/'
 const APIKey = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2VlN2QzNTFkNDM2ZTAwMTVkYTI3MTkiLCJpYXQiOjE3NDM2ODI4NjksImV4cCI6MTc0NDg5MjQ2OX0.antMXaShZo-QOGkmltLTzqOhABGF7TFwjaHPULTikjI"
 
-class CommentArea extends Component {
+const CommentArea = function(props) {
     
     // array di comments vuoto
-    state = {
-        comments: [],
-        isLoading: true,
-        isError: false
-    }
+
+
+    const [comments, setComments] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [isError, setIsError] = useState(false)
 
     // fetch
 
     // URL + book.asin?
 
-    getArrayOfComments = () => {
-        fetch(URL + this.props.valore, {
+    const getArrayOfComments = () => {
+        fetch(URL + props.valore, {
             headers: {
                 "Authorization": APIKey
             }
@@ -35,46 +35,39 @@ class CommentArea extends Component {
         .then((data) =>{
             //array dei commenti del libro selezionato
             console.log('array di commenti', data)
-            this.setState({
-                comments: data,
-                isLoading: false
-            })
+
+            setComments(data)
+            setIsLoading(false)
 
         })
         .catch(err => {
             console.log('errore', err)
-            this.setState({
-                isLoading: false,
-                isError: true
-            })
+            
+            setIsLoading(false)
+            setIsError(true)
         })
     }
 
-    componentDidMount = () => {
 
-        this.getArrayOfComments()
-    }
 
-    componentDidUpdate = (prevProps) => {
-        if(this.props.valore !== prevProps.valore) {
-            this.getArrayOfComments()
-        }
-    } 
+    useEffect(()=>{
+        getArrayOfComments()
+    }, [props.valore])
     
     
-    render(){
+    
         return(
             <div>
 
                 {
-                    this.state.isLoading === true && (
+                    isLoading === true && (
                         <div className="text-center">
                             <Spinner variant="primary" animation="border"  />
                         </div>
                 )}
 
                 {
-                        this.state.isError && (
+                        isError && (
                             <Alert variant='danger' className="text-center">
                                 <i className="bi bi-bug"></i> Errore nella fetch <i className="bi bi-bug"></i>
                             </Alert>
@@ -82,7 +75,7 @@ class CommentArea extends Component {
                 }
 
 {
-                        (this.state.comments.length === 0 && !this.state.isLoading) && (
+                        (comments.length === 0 && !isLoading) && (
                         <ListGroup.Item className="bg-light rounded">                          
                                 Nessuna Recensione!!
                         </ListGroup.Item>
@@ -90,13 +83,13 @@ class CommentArea extends Component {
                         )
                     }
 
-                <CommentList arrayOfComments={this.state.comments} />
+                <CommentList arrayOfComments={comments} />
 
-                <AddComment asin={this.props.valore} />
+                <AddComment asin={props.valore} />
 
             </div>
         )
-    }
+    
 
 }
 export default CommentArea

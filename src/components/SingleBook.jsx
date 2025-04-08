@@ -1,6 +1,6 @@
-import { Row, Col, Card, Button } from "react-bootstrap"
+import { Col, Card, Button } from "react-bootstrap"
 import { Component } from "react"
-import CommentArea from "./CommentArea"
+
 
 const styles = {
     card: {
@@ -19,16 +19,12 @@ const styles = {
 
 }
 
-class SingleBook extends Component {
+const SingleBook = function (props) {
 
-    /* state = {
-        selected: false,
-    }
-        rimosso perchè non ci serve più, adesso 
- */
+
     
 
-    render(){
+   
 
         //const [selected, setSelected] = useState(false)
 
@@ -38,21 +34,18 @@ class SingleBook extends Component {
 
             <Col xs={12} md={12} lg={6} xl={4} >
                         <Card style={styles.card}>
-                            <Card.Img variant="top" src={this.props.book.img} className="w-100" style={{
+                            <Card.Img variant="top" src={props.book.img} className="w-100" style={{
                                 ...styles.cardImage,
-                                border: this.props.asinCorrente ? '3px solid red' : 'none'
+                                border: props.asinCorrente ? '3px solid red' : 'none'
                             }} onClick={() => {
-                                /* this.setState({
-                                    selected: !this.state.selected,
-                                }) */
                                 // al click qua, io devo salvare l'asin in booklist
-                                this.props.cambiaValore(this.props.book.asin)
+                                props.cambiaValore(props.book.asin)
                                 console.log('seleziono un libro')
                             }} />
                             <Card.Body style={styles.cardBody} className="d-flex flex-column align-items-center">
-                                <Card.Title className="flex-grow-1">{this.props.book.title}</Card.Title>
-                                <Card.Text>{this.props.book.category}</Card.Text>
-                                <Card.Text>{this.props.book.price}€</Card.Text>
+                                <Card.Title className="flex-grow-1">{props.book.title}</Card.Title>
+                                <Card.Text>{props.book.category}</Card.Text>
+                                <Card.Text>{props.book.price}€</Card.Text>
                                 <Button variant="dark" className="w-25">Buy me</Button>
                             </Card.Body>
                         </Card>
@@ -61,7 +54,7 @@ class SingleBook extends Component {
         )
 
     }
-}
+
 
 export default SingleBook
 

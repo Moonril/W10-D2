@@ -4,15 +4,15 @@ import SingleComment from "./SingleComment";
 
 
 
-class CommentList extends Component {
+const CommentList = function(props) {
 
 
-    render(){
+    
         return(
             <ListGroup>
 
                 {
-                    this.props.arrayOfComments.map((com) => (
+                    props.arrayOfComments.map((com) => (
                         
                         <SingleComment key={com._id} com={com} />
                            
@@ -21,7 +21,7 @@ class CommentList extends Component {
                 }
             </ListGroup>
         )
-    }
+    
 }
 
 export default CommentList
